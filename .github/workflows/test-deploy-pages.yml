@@ -1,4 +1,4 @@
-name: Check if a deploy would run successfully
+name: Check if a deploy of the documentation would run successfully
 
 on:
   push:
@@ -20,6 +20,7 @@ jobs:
         with:
           node-version: 18
           cache: npm
+          cache-dependency-path: documentation
 
       - name: Install dependencies
         working-directory: documentation

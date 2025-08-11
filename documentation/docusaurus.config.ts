@@ -12,7 +12,7 @@ const config: Config = {
   url: "https://agile-software-engineering-25.github.io", // <- No trailing slash
   baseUrl: "/team-4-backend-abstract-file-service/", // <- Important: starts and ends with a slash if using trailingSlash: true
   organizationName: "Agile-Software-Engineering-25", // <- GitHub org name
-  projectName: "team-404-abstract-file-service", // <- Repo name
+  projectName: "team-4-backend-abstract-file-service", // <- Repo name
   trailingSlash: false, // Recommended to avoid double slashes on GitHub Pages
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
