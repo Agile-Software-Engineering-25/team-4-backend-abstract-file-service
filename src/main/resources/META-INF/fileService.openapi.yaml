@@ -38,7 +38,11 @@ paths:
         - $ref: '#/components/parameters/fileId'
       responses:
         '200':
-          $ref: '#/components/schemas/FileProperties'
+          description: "Properties of the file"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileProperties'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -52,12 +56,16 @@ paths:
 
   "/properties/file/access/{fileId}":
     get:
-      description: "Returns Properties of the file."
+      description: "Returns Accessrights of the file."
       parameters:
         - $ref: '#/components/parameters/fileId'
       responses:
         '200':
-          $ref: '#/components/schemas/FileProperties'
+          description: "Access rights of the file"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccessRights'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -76,7 +84,11 @@ paths:
         - $ref: '#/components/parameters/fileId'
       responses:
         '200':
-          $ref: '#/components/schemas/FileAdditionalMetaData'
+          description: "Additional metadata of the file"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileAdditionalMetaData'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -95,7 +107,11 @@ paths:
         - $ref: '#/components/parameters/fileId'
       responses:
         '200':
-          $ref: '#/components/schemas/Tags'
+          description: "Tags associated with the file"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tags'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -109,12 +125,12 @@ paths:
 
   "/search/file/tag/":
     get:
-      description: "Returns Properties of the files, that include the given tags."
+      description: "Returns the id of the files, that include the given tags."
       parameters:
         - $ref: '#/components/parameters/tags'
       responses:
         '200':
-          $ref: '#/components/schemas/Tags'
+          $ref: '#/components/responses/FileId'
         '400':
           $ref: '#/components/responses/BadRequest'
         '401':
@@ -137,6 +153,7 @@ components:
       description: "ID to identify the file via a query parameter."
       name: fileId
       in: path
+      required: true
       schema:
         $ref: '#/components/schemas/FileId'
 
@@ -167,6 +184,12 @@ components:
           schema:
             $ref: '#/components/schemas/FileProperties'
 
+    FileId:
+      description: "Id of a file."
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/FileId'
 
     ### File Response
 
@@ -232,7 +255,7 @@ components:
       description: "Includes all the File Properties."
       allOf:
       - $ref: '#/components/schemas/FileGeneralProperties'
-      - $ref: '#/components/schemas/FileAdditionalMetadata'
+      - $ref: '#/components/schemas/FileAdditionalMetaData'
       - $ref: '#/components/schemas/AccessRights'
 
     FileGeneralProperties:
@@ -261,17 +284,19 @@ components:
           description: "The name of the file."
 
     FileAdditionalMetaData:
-      type: object
       description: "Represents additional Metadata for a file" # TODO: Define the metadata;
-      additionalProperties: # TODO: Added to use any key value pairs.
+      type: object
+      additionalProperties:
         type: string
 
     AccessRights: # TODO: Definiton of Accessrights!
       type: object
       description: "Specifies which operations are allowed for the current user."
       properties:
-        read: boolean
-        write: boolean
+        read:
+          type: boolean
+        write:
+          type: boolean
 
     DirectoryProperties:
       description: "Represents the response if a file is a directory."
@@ -283,9 +308,10 @@ components:
       description: "An array of file properties."
       type: object
       properties:
-        type: array
-        items:
-          $ref: '#/components/schemas/FileProperties'
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/FileProperties'
 
     ### File Properties
 
