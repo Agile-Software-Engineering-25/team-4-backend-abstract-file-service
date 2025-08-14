@@ -270,6 +270,23 @@ components:
                 type: array
                 items:
                  type: string
+              access:
+                 type: object
+                 description: "Specifies which user has access to the file."
+                 properties:
+                   read:
+                     type: array
+                     items:
+                       $ref: "#/components/schemas/OwnerId"
+                   write:
+                     type: array
+                     items:
+                       $ref: "#/components/schemas/OwnerId"
+                   delete:
+                     type: array
+                     items:
+                       $ref: "#/components/schemas/OwnerId"
+
 
   responses:
     ### File Property
@@ -393,7 +410,7 @@ components:
       - type: object
         properties:
           ownerId:
-           $ref: "#/components/schemas/OwnerId"
+           $ref: "#/components/schemas/FileId"
       - type: object
       required:
         - type
@@ -440,14 +457,20 @@ components:
 
     AccessRights:
       type: object
-      description: "Specifies which operations are allowed for the current user."
+      description: "Specifies which user has access to the file."
       properties:
         read:
-          type: boolean
+          type: array
+          items:
+            $ref: "#/components/schemas/OwnerId"
         write:
-          type: boolean
+          type: array
+          items:
+            $ref: "#/components/schemas/OwnerId"
         delete:
-          type: boolean
+          type: array
+          items:
+            $ref: "#/components/schemas/OwnerId"
 
     Tags:
       description: "Tags associated with that file"
