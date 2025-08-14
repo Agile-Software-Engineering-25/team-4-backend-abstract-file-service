@@ -9,153 +9,172 @@ servers:
   - url: "https://localhost:6000/microservice/abstract-file-service/v1"
 
 paths:
+  ### GET
 
-### GET
-
-  "/file/{fileId}":
+  "/file/get/{fileId}":
     get:
       description: "Returns the file."
       parameters:
-        - $ref: '#/components/parameters/fileId'
+        - $ref: "#/components/parameters/fileId"
       responses:
-        '200':
-          $ref: '#/components/responses/FileBody'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '415':
-          $ref: '#/components/responses/UnsupportedMediaType'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "200":
+          $ref: "#/components/responses/FileBody"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  "/file/dir/{fileId}":
+    get:
+      description: "Returns the file properties for every file in a directory."
+      parameters:
+        - $ref: "#/components/parameters/fileId"
+      responses:
+        "200":
+          description: "Get the Metadata of the file."
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArrayOfFileProperties"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   "/properties/file/verbose/{fileId}":
     get:
       description: "Returns Properties of the file."
       parameters:
-        - $ref: '#/components/parameters/fileId'
+        - $ref: "#/components/parameters/fileId"
       responses:
-        '200':
+        "200":
           description: "Properties of the file"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FileProperties'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '415':
-          $ref: '#/components/responses/UnsupportedMediaType'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                $ref: "#/components/schemas/FileProperties"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   "/properties/file/access/{fileId}":
     get:
       description: "Returns Accessrights of the file."
       parameters:
-        - $ref: '#/components/parameters/fileId'
+        - $ref: "#/components/parameters/fileId"
       responses:
-        '200':
+        "200":
           description: "Access rights of the file"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/AccessRights'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '415':
-          $ref: '#/components/responses/UnsupportedMediaType'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                $ref: "#/components/schemas/AccessRights"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   "/properties/file/metadata/{fileId}":
     get:
-      description: "Returns Additional Metadata of the file."
+      description: "Returns the metadata of the file."
       parameters:
-        - $ref: '#/components/parameters/fileId'
+        - $ref: "#/components/parameters/fileId"
       responses:
-        '200':
-          description: "Additional metadata of the file"
+        "200":
+          description: "Get the Metadata of the file."
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FileAdditionalMetaData'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '415':
-          $ref: '#/components/responses/UnsupportedMediaType'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                $ref: "#/components/schemas/Metadata"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
   "/properties/file/tags/{fileId}":
     get:
       description: "Returns tags associated with the file."
       parameters:
-        - $ref: '#/components/parameters/fileId'
+        - $ref: "#/components/parameters/fileId"
       responses:
-        '200':
+        "200":
           description: "Tags associated with the file"
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Tags'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '415':
-          $ref: '#/components/responses/UnsupportedMediaType'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+                $ref: "#/components/schemas/Tags"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
-  "/search/file/tag/":
+  "/search/file/tag/": # TODO: What search functions do we want to support?
     get:
       description: "Returns the id of the files, that include the given tags."
       parameters:
-        - $ref: '#/components/parameters/tags'
+        - $ref: "#/components/parameters/tags"
       responses:
-        '200':
-          $ref: '#/components/responses/FileId'
-        '400':
-          $ref: '#/components/responses/BadRequest'
-        '401':
-          $ref: '#/components/responses/Unauthorized'
-        '403':
-          $ref: '#/components/responses/Forbidden'
-        '415':
-          $ref: '#/components/responses/UnsupportedMediaType'
-        '500':
-          $ref: '#/components/responses/InternalServerError'
+        "200":
+          $ref: "#/components/responses/FileId"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
 
 ### PUT
 
-
 components:
-
   parameters:
-
     fileId:
       description: "ID to identify the file via a query parameter."
       name: fileId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/FileId'
+        $ref: "#/components/schemas/FileId"
 
     fileLocations:
       description: "Specify in what folders the file should be included. The folders are specified by their fileId."
@@ -164,17 +183,16 @@ components:
       schema:
         type: array
         items:
-          $ref: '#/components/schemas/FileId'
+          $ref: "#/components/schemas/FileId"
 
     tags:
       description: "Tags given as query."
       name: tag
       in: query
       schema:
-        $ref: '#/components/schemas/Tags'
+        $ref: "#/components/schemas/Tags"
 
   responses:
-
     ### File Property
 
     FileProperty:
@@ -182,33 +200,38 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/FileProperties'
+            $ref: "#/components/schemas/FileProperties"
 
     FileId:
       description: "Id of a file."
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/FileId'
+            $ref: "#/components/schemas/FileId"
 
     ### File Response
 
-    FileBody: # TODO: What file types do we need to support? // Keep it generic or for different types different paths?
+    FileBody:
       description: "Returns the file."
       content:
+        text/html: {} # HTML
         image/jpeg: {} # JPG Image
-        image/png: {}  # PNG Image
-        image/gif: {}  # GIF Image
+        image/png: {} # PNG Image
+        image/gif: {} # GIF Image
         application/msword: {} # Word (.doc)
-        application/vnd.openxmlformats-officedocument.wordprocessingml.document: {} # Word (.docx)
+        application/vnd.openxmlformats-officedocument.wordprocessingml.document:
+          {} # Word (.docx)
         application/vnd.ms-excel: {} # Excel (.xls)
         application/vnd.openxmlformats-officedocument.spreadsheetml.sheet: {} # Excel (.xlsx)
         application/vnd.ms-powerpoint: {} # PowerPoint (.ppt)
-        application/vnd.openxmlformats-officedocument.presentationml.presentation: {} # PowerPoint (.pptx)
+        application/vnd.openxmlformats-officedocument.presentationml.presentation:
+          {} # PowerPoint (.pptx)
         application/zip: {} # ZIP Archive
+        application/pdf: {} # PDF File
+        text/calendar: {} # ics File
         application/json:
           schema:
-            $ref: '#/components/schemas/DirectoryProperties'
+            $ref: "#/components/schemas/DirectoryProperties"
 
     ### Error Responses
 
@@ -217,92 +240,54 @@ components:
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/ErrorSchema'
+            $ref: "#/components/schemas/ErrorSchema"
 
     Unauthorized:
       description: "unauthorized"
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/ErrorSchema'
+            $ref: "#/components/schemas/ErrorSchema"
 
     Forbidden:
       description: "Forbidden"
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/ErrorSchema'
+            $ref: "#/components/schemas/ErrorSchema"
 
     UnsupportedMediaType:
       description: "unsupported media type"
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/ErrorSchema'
+            $ref: "#/components/schemas/ErrorSchema"
 
     InternalServerError:
       description: "internal server error"
       content:
         application/problem+json:
           schema:
-            $ref: '#/components/schemas/ErrorSchema'
+            $ref: "#/components/schemas/ErrorSchema"
 
   schemas:
-
     ### Successful Response Schemas
 
     FileProperties:
       description: "Includes all the File Properties."
       allOf:
-      - $ref: '#/components/schemas/FileGeneralProperties'
-      - $ref: '#/components/schemas/FileAdditionalMetaData'
-      - $ref: '#/components/schemas/AccessRights'
-
-    FileGeneralProperties:
-      description: "Represent the minimum properties a file can have."
-      type: object
-      properties:
-        fileId:
-          type: integer
-          description: unique identifier for a file.
-
-        createdAt:
-          type: string
-          format: date-time
-          description: "Creation timestamp with seconds precision (ISO 8601)"
-        updatedAt:
-          type: string
-          nullable: true
-          format: date-time
-          description: "Timestamp of the last update with seconds precision (ISO 8601)"
-        ownerId:
-          type: integer
-          description: "Id to identify the Owner"
-
-        name:
-          type: string
-          description: "The name of the file."
-
-    FileAdditionalMetaData:
-      description: "Represents additional Metadata for a file" # TODO: Define the metadata;
-      type: object
-      additionalProperties:
-        type: string
-
-    AccessRights: # TODO: Definiton of Accessrights!
-      type: object
-      description: "Specifies which operations are allowed for the current user."
-      properties:
-        read:
-          type: boolean
-        write:
-          type: boolean
+       - $ref: "#/components/schemas/Metadata"
+       - $ref: "#/components/schemas/AccessRights"
+       - type: object
+         properties:
+          fileId:
+           $ref: "#/components/schemas/FileId"
 
     DirectoryProperties:
       description: "Represents the response if a file is a directory."
       allOf:
-        - $ref: '#/components/schemas/FileProperties'
-        - $ref: '#/components/schemas/ArrayOfFileProperties'
+        - $ref: "#/components/schemas/FileProperties"
+        - $ref: "#/components/schemas/ArrayOfFileProperties"
 
     ArrayOfFileProperties:
       description: "An array of file properties."
@@ -311,9 +296,59 @@ components:
         files:
           type: array
           items:
-            $ref: '#/components/schemas/FileProperties'
+            $ref: "#/components/schemas/FileProperties"
+
+    ArrayOfFileIds:
+      description: "An array of file ids."
+      type: object
+      properties:
+        files:
+          type: array
+          items:
+            $ref: "#/components/schemas/FileId"
 
     ### File Properties
+    Metadata:
+      description: "Represents additional Metadata for a file"
+      type: object
+      required:
+        - type
+        - name
+        - ownerId
+
+      properties:
+        type:
+          type: string
+          description: "Type of the file."
+
+        name:
+          type: string
+          description: "The name of the file."
+
+        createdAt:
+          type: string
+          format: date-time
+          description: "Creation timestamp with seconds precision (ISO 8601)"
+        updatedAt:
+          type:
+            - string
+            - "null"
+          format: date-time
+          description: "Timestamp of the last update with seconds precision (ISO 8601)"
+        ownerId:
+          type: integer
+          description: "Id to identify the Owner"
+
+    AccessRights:
+      type: object
+      description: "Specifies which operations are allowed for the current user."
+      properties:
+        read:
+          type: boolean
+        write:
+          type: boolean
+        delete:
+          type: boolean
 
     Tags:
       description: "Tags associated with that file"
@@ -340,10 +375,12 @@ components:
         detail:
           type: string
           description: "A explanation specific to this occurrence of the problem"
-         # x-field-extra-annotation: "@com.fasterxml.jackson.annotation.JsonInclude(com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL)" TODO: Still needed
 
     SecuritySchemes:
       bearerAuth:
         type: http
         scheme: bearer
         bearerFormat: JWT
+
+security:
+  - bearerAuth: []
