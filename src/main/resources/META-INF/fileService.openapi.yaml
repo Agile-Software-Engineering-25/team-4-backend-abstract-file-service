@@ -164,7 +164,38 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-### PUT
+### POST
+
+  "/file/upload/":
+    post:
+      description: "Upload a file."
+      requestBody:
+        $ref: "#/components/requestBodies/UploadFileRequest"
+      responses:
+        "201":
+           description: File uploaded successfully
+           headers:
+             Location:
+               description: URL of the uploaded file
+               schema:
+                 type: string
+                 format: uri
+           content:
+             application/json:
+                schema:
+                  $ref: "#/components/schemas/FileProperties"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+
 
 components:
   parameters:
@@ -191,6 +222,54 @@ components:
       in: query
       schema:
         $ref: "#/components/schemas/Tags"
+
+  requestBodies:
+    UploadFileRequest:
+      description: Upload a file with metadata
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            required:
+              - file
+              - name
+              - type
+              - ownerId
+            properties:
+              file:
+                type: string
+                format: binary
+                description: The file to upload
+              name:
+                type: string
+                description: The name of the file
+              type:
+                type: string
+                description: "MIME type of the file"
+                enum:
+                  - text/html
+                  - image/jpeg
+                  - image/png
+                  - image/gif
+                  - application/msword
+                  - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                  - application/vnd.ms-excel
+                  - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+                  - application/vnd.ms-powerpoint
+                  - application/vnd.openxmlformats-officedocument.presentationml.presentation
+                  - application/zip
+                  - application/pdf
+                  - text/calendar
+                  - application/json
+              ownerId:
+                type: integer
+                description: ID of the owner
+              tags:
+                description: "Tags associated with that file"
+                type: array
+                items:
+                 type: string
 
   responses:
     ### File Property
@@ -310,16 +389,35 @@ components:
     ### File Properties
     Metadata:
       description: "Represents additional Metadata for a file"
-      type: object
+      allOf:
+      - type: object
+        properties:
+          ownerId:
+           $ref: "#/components/schemas/OwnerId"
+      - type: object
       required:
         - type
         - name
         - ownerId
-
       properties:
         type:
           type: string
-          description: "Type of the file."
+          description: "MIME type of the file"
+          enum:
+            - text/html
+            - image/jpeg
+            - image/png
+            - image/gif
+            - application/msword
+            - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+            - application/vnd.ms-excel
+            - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+            - application/vnd.ms-powerpoint
+            - application/vnd.openxmlformats-officedocument.presentationml.presentation
+            - application/zip
+            - application/pdf
+            - text/calendar
+            - application/json
 
         name:
           type: string
@@ -335,9 +433,10 @@ components:
             - "null"
           format: date-time
           description: "Timestamp of the last update with seconds precision (ISO 8601)"
-        ownerId:
-          type: integer
-          description: "Id to identify the Owner"
+
+    OwnerId:
+      type: integer
+      description: "Id to identify the Owner"
 
     AccessRights:
       type: object
