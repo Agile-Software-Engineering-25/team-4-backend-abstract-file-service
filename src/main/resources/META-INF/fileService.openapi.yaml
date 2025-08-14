@@ -242,51 +242,13 @@ components:
                 format: binary
                 description: The file to upload
               name:
-                type: string
-                description: The name of the file
-              type:
-                type: string
-                description: "MIME type of the file"
-                enum:
-                  - text/html
-                  - image/jpeg
-                  - image/png
-                  - image/gif
-                  - application/msword
-                  - application/vnd.openxmlformats-officedocument.wordprocessingml.document
-                  - application/vnd.ms-excel
-                  - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-                  - application/vnd.ms-powerpoint
-                  - application/vnd.openxmlformats-officedocument.presentationml.presentation
-                  - application/zip
-                  - application/pdf
-                  - text/calendar
-                  - application/json
+                $ref: "#/components/schemas/Filename"
               ownerId:
-                type: integer
-                description: ID of the owner
+                $ref: "#/components/schemas/OwnerId"
               tags:
-                description: "Tags associated with that file"
-                type: array
-                items:
-                 type: string
+                $ref: "#/components/schemas/Tags"
               access:
-                 type: object
-                 description: "Specifies which user has access to the file."
-                 properties:
-                   read:
-                     type: array
-                     items:
-                       $ref: "#/components/schemas/OwnerId"
-                   write:
-                     type: array
-                     items:
-                       $ref: "#/components/schemas/OwnerId"
-                   delete:
-                     type: array
-                     items:
-                       $ref: "#/components/schemas/OwnerId"
-
+                $ref: "#/components/schemas/AccessRights"
 
   responses:
     ### File Property
@@ -407,10 +369,7 @@ components:
     Metadata:
       description: "Represents additional Metadata for a file"
       allOf:
-      - type: object
-        properties:
-          ownerId:
-           $ref: "#/components/schemas/FileId"
+      - $ref: "#/components/schemas/TimeMetadata"
       - type: object
       required:
         - type
@@ -418,28 +377,41 @@ components:
         - ownerId
       properties:
         type:
-          type: string
-          description: "MIME type of the file"
-          enum:
-            - text/html
-            - image/jpeg
-            - image/png
-            - image/gif
-            - application/msword
-            - application/vnd.openxmlformats-officedocument.wordprocessingml.document
-            - application/vnd.ms-excel
-            - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-            - application/vnd.ms-powerpoint
-            - application/vnd.openxmlformats-officedocument.presentationml.presentation
-            - application/zip
-            - application/pdf
-            - text/calendar
-            - application/json
-
+          $ref: "#/components/schemas/SupportedMediaType"
         name:
-          type: string
-          description: "The name of the file."
+          $ref: "#/components/schemas/Filename"
+        ownerId:
+          $ref: "#/components/schemas/OwnerId"
+        access:
+          $ref: "#/components/schemas/AccessRights"
 
+    Filename:
+      type: string
+      description: "The name of the file."
+
+    SupportedMediaType:
+      type: string
+      description: "MIME type of the file"
+      enum:
+        - text/html
+        - image/jpeg
+        - image/png
+        - image/gif
+        - application/msword
+        - application/vnd.openxmlformats-officedocument.wordprocessingml.document
+        - application/vnd.ms-excel
+        - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+        - application/vnd.ms-powerpoint
+        - application/vnd.openxmlformats-officedocument.presentationml.presentation
+        - application/zip
+        - application/pdf
+        - text/calendar
+        - application/json
+
+    TimeMetadata:
+      type: object
+      description: "Includes time related metadata."
+      properties:
         createdAt:
           type: string
           format: date-time
