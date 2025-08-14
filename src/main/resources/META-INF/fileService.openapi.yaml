@@ -164,7 +164,7 @@ paths:
         - $ref: "#/components/parameters/tags"
       responses:
         "200":
-          $ref: "#/components/responses/FileId"
+          $ref: "#/components/responses/ArrayOfFileIds"
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
