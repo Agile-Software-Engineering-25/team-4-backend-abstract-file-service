@@ -9,92 +9,6 @@ servers:
   - url: "https://localhost:6000/microservice/abstract-file-service/v1"
 
 paths:
-  "/files/{fileId}":
-    get:
-      description: "Returns the file."
-      parameters:
-        - $ref: "#/components/parameters/fileId"
-      responses:
-        "200":
-          $ref: "#/components/responses/FileBody"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "415":
-          $ref: "#/components/responses/UnsupportedMediaType"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-    delete:
-      description: "Deletes a file."
-      parameters:
-        - $ref: "#/components/parameters/fileId"
-      responses:
-        "200":
-          $ref: "#/components/responses/FileId"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-
-  "/properties/{fileId}":
-    get:
-      description: "Returns Properties of the file."
-      parameters:
-        - $ref: "#/components/parameters/fileId"
-      responses:
-        "200":
-          description: "Properties of the file"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FileProperties"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "415":
-          $ref: "#/components/responses/UnsupportedMediaType"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-    put:
-      description: "Updates the properties of a file."
-      parameters:
-        - $ref: "#/components/parameters/fileId"
-      requestBody:
-        required: true
-        $ref: "#/components/requestBodies/UpdateFileProperties"
-      responses:
-        "200":
-          description: "successfully processed the request."
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "415":
-          $ref: "#/components/responses/UnsupportedMediaType"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
   "/files":
     get:
       description: "Returns the id of the files, that include the given tags."
@@ -136,6 +50,91 @@ paths:
              application/json:
                 schema:
                   $ref: "#/components/schemas/FileProperties"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  "/files/{fileId}":
+    get:
+      description: "Returns the file."
+      parameters:
+        - $ref: "#/components/parameters/fileId"
+      responses:
+        "200":
+          $ref: "#/components/responses/FileBody"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+    delete:
+      description: "Deletes a file."
+      parameters:
+        - $ref: "#/components/parameters/fileId"
+      responses:
+        "200":
+          $ref: "#/components/responses/FileId"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+  "/properties/{fileId}":
+    get:
+      description: "Returns Properties of the file."
+      parameters:
+        - $ref: "#/components/parameters/fileId"
+      responses:
+        "200":
+          description: "Properties of the file"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FileProperties"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+    put:
+      description: "Updates the properties of a file."
+      parameters:
+        - $ref: "#/components/parameters/fileId"
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/UpdateFileProperties"
+      responses:
+        "200":
+          description: "successfully processed the request."
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
