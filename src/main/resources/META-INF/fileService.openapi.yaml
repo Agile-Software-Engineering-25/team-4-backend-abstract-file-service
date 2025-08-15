@@ -12,6 +12,7 @@ paths:
   "/files":
     get:
       description: "Returns the id of the files, that include the given tags."
+      operationId: "searchFiles"
       parameters:
         - $ref: "#/components/parameters/tags" # TODO: What search functions do we want to support?
       responses:
@@ -34,6 +35,7 @@ paths:
 
     post:
       description: "Upload a file."
+      operationId: "uploadFile"
       requestBody:
         required: true
         $ref: "#/components/requestBodies/UploadFileRequest"
@@ -64,6 +66,7 @@ paths:
   "/files/{fileId}":
     get:
       description: "Returns the file."
+      operationId: "getFile"
       parameters:
         - $ref: "#/components/parameters/fileId"
       responses:
@@ -84,6 +87,7 @@ paths:
 
     put:
       description: "Update a file."
+      operationId: "updateFile"
       parameters:
         - $ref: "#/components/parameters/fileId"
       requestBody:
@@ -116,6 +120,7 @@ paths:
 
     delete:
       description: "Deletes a file."
+      operationId: "deleteFile"
       parameters:
         - $ref: "#/components/parameters/fileId"
       responses:
@@ -135,6 +140,7 @@ paths:
   "/properties/{fileId}":
     get:
       description: "Returns Properties of the file."
+      operationId: "getFileProperties"
       parameters:
         - $ref: "#/components/parameters/fileId"
       responses:
@@ -159,6 +165,7 @@ paths:
 
     patch:
       description: "Updates the properties of a file."
+      operationId: "updateFileProperties"
       parameters:
         - $ref: "#/components/parameters/fileId"
       requestBody:
@@ -404,6 +411,7 @@ components:
         $ref: "#/components/schemas/FileId"
 
     SupportedMediaType:
+
       description: "MIME type of the file"
       type: string
       enum:
