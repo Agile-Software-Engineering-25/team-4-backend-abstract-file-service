@@ -82,6 +82,38 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
+    put:
+      description: "Update a file."
+      parameters:
+        - $ref: "#/components/parameters/fileId"
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/UploadFileRequest"
+      responses:
+        "201":
+           description: File uploaded successfully
+           headers:
+             Location:
+               description: URL of the uploaded file
+               schema:
+                 type: string
+                 format: uri
+           content:
+             application/json:
+                schema:
+                  $ref: "#/components/schemas/FileProperties"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+
     delete:
       description: "Deletes a file."
       parameters:
@@ -156,15 +188,6 @@ components:
       schema:
         $ref: "#/components/schemas/FileId"
 
-    fileLocations:
-      description: "Specify in what folders the file should be included. The folders are specified by their fileId."
-      name: location
-      in: query
-      schema:
-        type: array
-        items:
-          $ref: "#/components/schemas/FileId"
-
     tags:
       description: "Tags given as query."
       name: tag
@@ -185,6 +208,7 @@ components:
               - name
               - type
               - ownerId
+              - locations
             properties:
               file:
                 type: string
@@ -198,6 +222,8 @@ components:
                 $ref: "#/components/schemas/Tags"
               access:
                 $ref: "#/components/schemas/AccessRights"
+              locations:
+                $ref: "#/components/schemas/FileLocation"
 
     UpdateFileProperties:
       content:
@@ -206,12 +232,18 @@ components:
             description: "Update the Metadata of a file."
             type: object
             properties:
+                name:
+                 $ref: "#/components/schemas/Filename"
+                ownerId:
+                 $ref: "#/components/schemas/OwnerId"
                 access:
                   $ref: "#/components/schemas/AccessRights"
                 metadata:
                    $ref: "#/components/schemas/Metadata"
                 tags:
                    $ref: "#/components/schemas/Tags"
+                locations:
+                   $ref: "#/components/schemas/FileLocation"
 
   responses:
     ### File Property
@@ -317,6 +349,9 @@ components:
         tags:
           $ref: "#/components/schemas/Tags"
 
+        locations:
+          $ref: "#/components/schemas/FileLocation"
+
     DirectoryProperties:
       description: "Represents the response if a file is a directory."
       allOf:
@@ -363,9 +398,14 @@ components:
       type: string
       description: "The name of the file."
 
+    FileLocation:
+      type: array
+      items:
+        $ref: "#/components/schemas/FileId"
+
     SupportedMediaType:
-      type: string
       description: "MIME type of the file"
+      type: string
       enum:
         - text/html
         - image/jpeg
@@ -424,7 +464,6 @@ components:
       items:
         type: string
 
-    ### Parameter Schemas
     FileId:
       description: "Used to identify a file."
       type: integer
