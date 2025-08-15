@@ -394,7 +394,7 @@ components:
         - name
         - ownerId
       properties:
-        type:
+        mime:
           $ref: "#/components/schemas/SupportedMediaType"
         name:
           $ref: "#/components/schemas/Filename"
@@ -411,7 +411,6 @@ components:
         $ref: "#/components/schemas/FileId"
 
     SupportedMediaType:
-
       description: "MIME type of the file"
       type: string
       enum:
