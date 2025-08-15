@@ -9,9 +9,7 @@ servers:
   - url: "https://localhost:6000/microservice/abstract-file-service/v1"
 
 paths:
-  ### GET
-
-  "/file/get/{fileId}":
+  "/files/{fileId}":
     get:
       description: "Returns the file."
       parameters:
@@ -32,18 +30,13 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  "/file/dir/{fileId}":
-    get:
-      description: "Returns the file properties for every file in a directory."
+    delete:
+      description: "Deletes a file."
       parameters:
         - $ref: "#/components/parameters/fileId"
       responses:
         "200":
-          description: "Get the Metadata of the file."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ArrayOfFileProperties"
+          $ref: "#/components/responses/FileId"
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
@@ -52,12 +45,11 @@ paths:
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-        "415":
-          $ref: "#/components/responses/UnsupportedMediaType"
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  "/properties/file/verbose/{fileId}":
+
+  "/properties/{fileId}":
     get:
       description: "Returns Properties of the file."
       parameters:
@@ -82,86 +74,32 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  "/properties/file/access/{fileId}":
-    get:
-      description: "Returns Accessrights of the file."
+    put:
+      description: "Updates the properties of a file."
       parameters:
         - $ref: "#/components/parameters/fileId"
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/UpdateFileProperties"
       responses:
         "200":
-          description: "Access rights of the file"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AccessRights"
+          description: "successfully processed the request."
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
         "415":
           $ref: "#/components/responses/UnsupportedMediaType"
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  "/properties/file/metadata/{fileId}":
-    get:
-      description: "Returns the metadata of the file."
-      parameters:
-        - $ref: "#/components/parameters/fileId"
-      responses:
-        "200":
-          description: "Get the Metadata of the file."
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Metadata"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "415":
-          $ref: "#/components/responses/UnsupportedMediaType"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  "/properties/file/tags/{fileId}":
-    get:
-      description: "Returns tags associated with the file."
-      parameters:
-        - $ref: "#/components/parameters/fileId"
-      responses:
-        "200":
-          description: "Tags associated with the file"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Tags"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "415":
-          $ref: "#/components/responses/UnsupportedMediaType"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  "/search/file/tag/": # TODO: What search functions do we want to support?
+  "/files":
     get:
       description: "Returns the id of the files, that include the given tags."
       parameters:
-        - $ref: "#/components/parameters/tags"
+        - $ref: "#/components/parameters/tags" # TODO: What search functions do we want to support?
       responses:
         "200":
           description: "Gets all the fileIds, where the tag is included."
@@ -180,9 +118,6 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-### POST
-
-  "/file/upload/":
     post:
       description: "Upload a file."
       requestBody:
@@ -201,73 +136,6 @@ paths:
              application/json:
                 schema:
                   $ref: "#/components/schemas/FileProperties"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "415":
-          $ref: "#/components/responses/UnsupportedMediaType"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-### DELETE
-
-  "/file/delete/{fileId}":
-    delete:
-      description: "Deletes a file."
-      parameters:
-        - $ref: "#/components/parameters/fileId"
-      responses:
-        "200":
-          $ref: "#/components/responses/FileId"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-### UPDATE
-
-  "/properties/update/file/access/{fileId}":
-    put:
-      description: "Updates the AccessRights of a file."
-      parameters:
-        - $ref: "#/components/parameters/fileId"
-      requestBody:
-        required: true
-        $ref: "#/components/requestBodies/UpdateAccessRequest"
-      responses:
-        "200":
-          description: "successfully processed the request."
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "415":
-          $ref: "#/components/responses/UnsupportedMediaType"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  "/properties/update/file/metadata/{fileId}":
-    put:
-      description: "Updates the metadata of a file."
-      parameters:
-        - $ref: "#/components/parameters/fileId"
-      requestBody:
-        required: true
-        $ref: "#/components/requestBodies/UpdateMetadataRequest"
-      responses:
-        "200":
-          description: "successfully processed the request."
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
@@ -332,24 +200,19 @@ components:
               access:
                 $ref: "#/components/schemas/AccessRights"
 
-    UpdateMetadataRequest:
+    UpdateFileProperties:
       content:
         application/json:
           schema:
             description: "Update the Metadata of a file."
             type: object
             properties:
-              name:
-                $ref: "#/components/schemas/Filename"
-              ownerId: # TODO: Should ownerId be moved to AccessRights?
-                $ref: "#/components/schemas/OwnerId"
-
-    UpdateAccessRequest:
-      description: "Update the Access to the file."
-      content:
-        application/json:
-          schema:
-            $ref: "#/components/schemas/AccessRights"
+                access:
+                  $ref: "#/components/schemas/AccessRights"
+                metadata:
+                   $ref: "#/components/schemas/Metadata"
+                tags:
+                   $ref: "#/components/schemas/Tags"
 
   responses:
     ### File Property

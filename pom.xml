@@ -65,12 +65,7 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <!-- dependencies for generated Source Code        -->
-        <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations</artifactId>
-        </dependency>
-    </dependencies>
+           </dependencies>
     <build>
         <plugins>
             <plugin>
