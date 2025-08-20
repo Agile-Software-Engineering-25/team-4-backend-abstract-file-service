@@ -14,7 +14,7 @@ paths:
       description: "Returns the id of the files, that include the given tags."
       operationId: "searchFiles"
       parameters:
-        - $ref: "#/components/parameters/tags" # TODO: What search functions do we want to support?
+        - $ref: "#/components/parameters/tags" #TODO
       responses:
         "200":
           description: "Gets all the fileIds, where the tag is included."
@@ -204,7 +204,7 @@ components:
 
   requestBodies:
     UploadFileRequest:
-      description: Upload a file with metadata
+      description: "Upload a file with metadata"
       required: true
       content:
         multipart/form-data:
@@ -213,9 +213,7 @@ components:
             required:
               - file
               - name
-              - type
-              - ownerId
-              - locations
+              - mime
             properties:
               file:
                 type: string
@@ -223,7 +221,9 @@ components:
                 description: The file to upload
               name:
                 $ref: "#/components/schemas/Filename"
-              ownerId: # TODO: Can we set it ourselves?
+              mime:
+                $ref: "#/components/schemas/SupportedMediaType"
+              ownerId:
                 $ref: "#/components/schemas/OwnerId"
               tags:
                 $ref: "#/components/schemas/Tags"
