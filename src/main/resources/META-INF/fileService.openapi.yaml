@@ -11,10 +11,22 @@ servers:
 paths:
   "/files":
     get:
-      description: "Simple Search - Returns the id of the files, that include the given tags."
-      operationId: "searchFilesByTag"
+      description: "Search with given query parameters."
+      operationId: "searchFiles"
       parameters:
+        - $ref: "#/components/parameters/page"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/option"
+        - $ref: "#/components/parameters/sort"
+        - $ref: "#/components/parameters/asc"
+        - $ref: "#/components/parameters/fuzziness"
+        - $ref: "#/components/parameters/time"
+        - $ref: "#/components/parameters/start"
+        - $ref: "#/components/parameters/end"
         - $ref: "#/components/parameters/tags"
+        - $ref: "#/components/parameters/owners"
+        # - $ref: "#/components/parameters/access_user"
+        # - $ref: "#/components/parameters/access"
       responses:
         "200":
           description: "Gets all the file-ids, where the tag is included."
@@ -145,7 +157,6 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-
     delete:
       description: "Deletes a file."
       operationId: "deleteFile"
@@ -224,11 +235,142 @@ components:
         $ref: "#/components/schemas/FileId"
 
     tags:
-      description: "Tags given as query."
+      description: >
+          Filter by tag. Prefix with "!" to exclude a tag.
+          Example: tag=cats&tag=!dogs
       name: tag
       in: query
       schema:
         $ref: "#/components/schemas/Tags"
+
+    names:
+      description: >
+          Filter by name. Prefix with "!" to exclude a name.
+          Example: name=cats&name=!dogs
+      name: name
+      in: query
+      schema:
+        type: array
+        items:
+          $ref: "#/components/schemas/Filename"
+
+    owners:
+      description: >
+          Filter by ownerId. Prefix with "!" to exclude a ownerId.
+          Example: tag=1234&tag=!2344
+      name: owner
+      in: query
+      schema:
+        type: array
+        items:
+          $ref: "#/components/schemas/Filename"
+
+    # access_user:
+    #   description: "A given user by id to check for access rights. Default is the user/service that has a request."
+    #   name: access_user
+    #   in: query
+    #   schema:
+    #       $ref: "#/components/schemas/OwnerId"
+    #
+    # access:
+    #   description: >
+    #       Filter by AccessType for the given access user. Prefix with "!" to exclude an AccessType.
+    #       Example: access=read&access=!write
+    #   name:
+    #   in: query
+    #   schema:
+    #     type: array
+    #     items:
+    #       access_type:
+    #         type: string
+    #         enum:
+    #           - read
+    #           - write
+    #           - delete
+    #           - "!read"
+    #           - "!write"
+    #           - "!delete"
+
+    time:
+      description: "What timestamp to search in."
+      name: time
+      in: query
+      schema:
+        type: string
+        enum: ['createdAt', 'updatedAt']
+
+    start:
+      description: "Start time for a time range filter."
+      name: start
+      in: query
+      schema:
+        type: string
+        format: date-time
+
+    end:
+      description: "End time for a time range filter."
+      name: end
+      in: query
+      schema:
+        type: string
+        format: date-time
+
+    # Paginate
+    page:
+      description: "What page should be shown."
+      name: page
+      in: query
+      schema:
+        type: integer
+        default: 1
+        minimum: 0
+
+    limit:
+      description: "Number of files in one page."
+      name: limit
+      in: query
+      schema:
+        type: integer
+        default: 20
+        minimum: 0
+
+    # Search Options
+    option:
+      description: "How the given data should be combined to get the search results."
+      name: option
+      in: query
+      schema:
+        type: string
+        enum: ['and', 'or']
+
+    sort:
+      description: "The datatype used for sorting."
+      name: sort
+      in: query
+      schema:
+        type: string
+        enum: ['name', 'tags', 'locations', 'date']
+
+    asc:
+      description: "If the data should be sorted in ascending order."
+      name: asc
+      in: query
+      schema:
+        type: boolean
+        default: true
+
+    fuzziness:
+      name: fuzziness
+      in: query
+      description: >
+        Degree of fuzziness for the search.
+        0 = exact match, 1 = low, 2 = medium, high = 3+
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 5
+        default: 1
 
   requestBodies:
     UploadFileRequest:
@@ -521,31 +663,7 @@ components:
       description: "Used to identify a file."
       type: integer
 
-    ### Search Schemas
-    SearchResults:
-      description: "Generic search results container with metadata."
-      type: object
-      properties:
-        results:
-          oneOf:
-            - $ref: "#/components/schemas/ArrayOfFileIds"
-            - $ref: "#/components/schemas/ArrayOfFileProperties"
-        totalCount:
-          type: integer
-          description: "Total number of results found"
-        pagination:
-          type: object
-          properties:
-            limit:
-              type: integer
-              description: "Number of results per page"
-            offset:
-              type: integer
-              description: "Number of results skipped"
-            hasMore:
-              type: boolean
-              description: "Whether there are more results available"
-    ### Error Schemas
+       ### Error Schemas
 
     ErrorSchema:
       type: object
