@@ -10,10 +10,10 @@
         <relativePath /> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.ase</groupId>
-    <artifactId>userservice</artifactId>
+    <artifactId>fileservice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>userService</name>
-    <description>userService</description>
+    <name>abstractFileService</name>
+    <description>An Abstract File Service for SAU</description>
     <url />
     <licenses>
         <license />
@@ -29,6 +29,7 @@
     </scm>
     <properties>
         <java.version>21</java.version>
+        <base.package>com.ase.fileservice</base.package>
     </properties>
     <dependencies>
         <dependency>
@@ -79,9 +80,15 @@
                         </goals>
                         <configuration>
                             <inputSpec>${project.basedir}/src/main/resources/META-INF/fileService.openapi.yaml</inputSpec>
+                            <output>${project.build.directory}/</output>
+                            <modelPackage>${base.package}.model</modelPackage>
+                            <apiPackage>${base.package}.api</apiPackage>
+                            <invokerPackage>${base.package}.handler</invokerPackage>
                             <generatorName>spring</generatorName>
                             <configOptions>
                                 <sourceFolder>src/gen/java/main</sourceFolder>
+                                <configPackage>${base.package}.configuration</configPackage>
+                                <useSpringBoot3>true</useSpringBoot3>
                             </configOptions>
                         </configuration>
                     </execution>
