@@ -380,7 +380,7 @@ components:
             required:
               - file
               - name
-              - mime
+              - mime-type
             properties:
               file:
                 type: string
@@ -388,7 +388,7 @@ components:
                 description: The file to upload
               name:
                 $ref: "#/components/schemas/Filename"
-              mime:
+              mime-type:
                 $ref: "#/components/schemas/SupportedMediaType"
               owner-id:
                 $ref: "#/components/schemas/OwnerId"
@@ -424,14 +424,15 @@ components:
             description: "Update the Metadata of a file."
             type: object
             properties:
-                name:
-                 $ref: "#/components/schemas/Filename"
-                owner-id:
-                 $ref: "#/components/schemas/OwnerId"
                 access:
                   $ref: "#/components/schemas/AccessRights"
                 metadata:
-                   $ref: "#/components/schemas/Metadata"
+                  type: object
+                  properties:
+                    name:
+                      $ref: "#/components/schemas/Filename"
+                    owner-id:
+                      $ref: "#/components/schemas/OwnerId"
                 tags:
                    $ref: "#/components/schemas/Tags"
                 locations:
@@ -570,7 +571,7 @@ components:
         - name
         - owner-id
       properties:
-        mime:
+        mime-type:
           $ref: "#/components/schemas/SupportedMediaType"
         name:
           $ref: "#/components/schemas/Filename"
