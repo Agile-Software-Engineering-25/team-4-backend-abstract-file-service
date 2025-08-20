@@ -17,7 +17,7 @@ paths:
         - $ref: "#/components/parameters/tags"
       responses:
         "200":
-          description: "Gets all the fileIds, where the tag is included."
+          description: "Gets all the file-ids, where the tag is included."
           content:
             application/json:
               schema:
@@ -63,38 +63,12 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  # "/files:search":
-  #   post:
-  #     description: "Advanced search for files with complex criteria."
-  #     operationId: "searchFiles"
-  #     requestBody:
-  #       required: true
-  #       $ref: "#/components/requestBodies/SearchFilesRequest"
-  #     responses:
-  #       "200":
-  #         description: "Search completed successfully"
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: "#/components/schemas/SearchResults"
-  #       "400":
-  #         $ref: "#/components/responses/BadRequest"
-  #       "401":
-  #         $ref: "#/components/responses/Unauthorized"
-  #       "403":
-  #         $ref: "#/components/responses/Forbidden"
-  #       "415":
-  #         $ref: "#/components/responses/UnsupportedMediaType"
-  #       "500":
-  #         $ref: "#/components/responses/InternalServerError"
-  #
-
-  "/files/{fileId}":
+  "/files/{file-id}":
     get:
       description: "Returns the file content."
       operationId: "getFile"
       parameters:
-        - $ref: "#/components/parameters/fileId"
+        - $ref: "#/components/parameters/file-id"
       responses:
         "200":
           $ref: "#/components/responses/FileContent"
@@ -115,7 +89,7 @@ paths:
       description: "Replaces the file content while preserving metadata."
       operationId: "updateFileContent"
       parameters:
-        - $ref: "#/components/parameters/fileId"
+        - $ref: "#/components/parameters/file-id"
       requestBody:
         required: true
         $ref: "#/components/requestBodies/UpdateFileContentRequest"
@@ -143,7 +117,7 @@ paths:
       description: "Update a file."
       operationId: "updateFile"
       parameters:
-        - $ref: "#/components/parameters/fileId"
+        - $ref: "#/components/parameters/file-id"
       requestBody:
         required: true
         $ref: "#/components/requestBodies/UploadFileRequest"
@@ -176,7 +150,7 @@ paths:
       description: "Deletes a file."
       operationId: "deleteFile"
       parameters:
-        - $ref: "#/components/parameters/fileId"
+        - $ref: "#/components/parameters/file-id"
       responses:
         "200":
           $ref: "#/components/responses/FileId"
@@ -191,12 +165,12 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  "/properties/{fileId}":
+  "/properties/{file-id}":
     get:
       description: "Returns Properties of the file."
       operationId: "getFileProperties"
       parameters:
-        - $ref: "#/components/parameters/fileId"
+        - $ref: "#/components/parameters/file-id"
       responses:
         "200":
           description: "Properties of the file"
@@ -221,7 +195,7 @@ paths:
       description: "Updates the properties of a file."
       operationId: "updateFileProperties"
       parameters:
-        - $ref: "#/components/parameters/fileId"
+        - $ref: "#/components/parameters/file-id"
       requestBody:
         required: true
         $ref: "#/components/requestBodies/UpdateFileProperties"
@@ -241,9 +215,9 @@ paths:
 
 components:
   parameters:
-    fileId:
+    file-id:
       description: "ID to identify the file via a query parameter."
-      name: fileId
+      name: file-id
       in: path
       required: true
       schema:
@@ -277,7 +251,7 @@ components:
                 $ref: "#/components/schemas/Filename"
               mime:
                 $ref: "#/components/schemas/SupportedMediaType"
-              ownerId:
+              owner-id:
                 $ref: "#/components/schemas/OwnerId"
               tags:
                 $ref: "#/components/schemas/Tags"
@@ -313,7 +287,7 @@ components:
             properties:
                 name:
                  $ref: "#/components/schemas/Filename"
-                ownerId:
+                owner-id:
                  $ref: "#/components/schemas/OwnerId"
                 access:
                   $ref: "#/components/schemas/AccessRights"
@@ -323,27 +297,6 @@ components:
                    $ref: "#/components/schemas/Tags"
                 locations:
                    $ref: "#/components/schemas/FileLocation"
-
-    # SearchFilesRequest:
-    #   content:
-    #     application/json:
-    #     schema:
-    #       description: "Advanced search request with complex criteria"
-    #       required: true
-    #       content:
-    #         application/json:
-    #           schema:
-    #             type: object
-    #             properties:
-    #               criteria:
-    #                 $ref: "#/components/schemas/SearchCriteria"
-    #               options:
-    #                 $ref: "#/components/schemas/SearchOptions"
-    #               return-type:
-    #                 type: string
-    #                 enum: ["ids", "properties", "summary"]
-    #                 default: "summary"
-    #                 description: "Format of the search results"
 
   responses:
     ### File Property
@@ -437,7 +390,7 @@ components:
       description: "Includes all the File Properties."
       type: object
       properties:
-        fileId:
+        file-id:
          $ref: "#/components/schemas/FileId"
 
         access:
@@ -485,13 +438,13 @@ components:
       required:
         - type
         - name
-        - ownerId
+        - owner-id
       properties:
         mime:
           $ref: "#/components/schemas/SupportedMediaType"
         name:
           $ref: "#/components/schemas/Filename"
-        ownerId:
+        owner-id:
           $ref: "#/components/schemas/OwnerId"
 
     Filename:
@@ -592,130 +545,6 @@ components:
             hasMore:
               type: boolean
               description: "Whether there are more results available"
-
-    SearchCriteria:
-      description: "Search criteria for advanced file search."
-      type: object
-      properties:
-        name:
-          type: object
-          properties:
-            value:
-              type: string
-              description: "The filename to search for"
-            mode:
-              type: string
-              enum: ["exact", "contains", "regex", "fuzzy"]
-              default: "contains"
-              description: "Search mode for filename matching"
-        tags:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                type: string
-              description: "List of tags to search for"
-            mode:
-              type: string
-              enum: ["any", "all"]
-              default: "any"
-              description: "How to match tags (any: OR, all: AND)"
-        ownerId:
-          type: object
-          properties:
-            value:
-              $ref: "#/components/schemas/OwnerId"
-            mode:
-              type: string
-              enum: ["exact"]
-              default: "exact"
-        access:
-          type: object
-          properties:
-            userId:
-              $ref: "#/components/schemas/OwnerId"
-            permission:
-              type: string
-              enum: ["read", "write", "delete"]
-              description: "Check if user has specific permission"
-        mime-type:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                $ref: "#/components/schemas/SupportedMediaType"
-              description: "List of MIME types to search for"
-        dateRange:
-          type: object
-          properties:
-            field:
-              type: string
-              enum: ["createdAt", "updatedAt"]
-              default: "createdAt"
-              description: "Which date field to search"
-            from:
-              type: string
-              format: date-time
-              description: "Start date (inclusive)"
-            to:
-              type: string
-              format: date-time
-              description: "End date (inclusive)"
-        locations:
-          type: object
-          properties:
-            values:
-              type: array
-              items:
-                $ref: "#/components/schemas/FileId"
-              description: "List of location IDs to search in"
-            mode:
-              type: string
-              enum: ["any", "all"]
-              default: "any"
-
-    SearchOptions:
-      description: "Options for search behavior and result formatting."
-      type: object
-      properties:
-        sort:
-          type: array
-          items:
-            type: object
-            required:
-              - field
-            properties:
-              field:
-                type: string
-                enum: ["name", "createdAt", "updatedAt", "ownerId", "mime-type"]
-                description: "Field to sort by"
-              order:
-                type: string
-                enum: ["asc", "desc"]
-                default: "asc"
-                description: "Sort order"
-        pagination:
-          type: object
-          properties:
-            limit:
-              type: integer
-              minimum: 1
-              maximum: 1000
-              default: 100
-              description: "Maximum number of results to return"
-            offset:
-              type: integer
-              minimum: 0
-              default: 0
-              description: "Number of results to skip"
-        caseSensitive:
-          type: boolean
-          default: false
-          description: "Whether string searches should be case sensitive"
-
-
     ### Error Schemas
 
     ErrorSchema:
