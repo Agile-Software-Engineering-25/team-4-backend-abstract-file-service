@@ -6,7 +6,8 @@ info:
   version: "0.0.1"
 
 servers:
-  - url: "https://localhost:6000/microservice/abstract-file-service/v1"
+  - url: "https://localhost:8080/microservice/abstract-file-service/v1"
+  - url: "https://sau-portal.de/microservice/abstract-file-service/v1"
 
 paths:
   "/files":
@@ -53,17 +54,17 @@ paths:
         $ref: "#/components/requestBodies/UploadFileRequest"
       responses:
         "201":
-           description: File uploaded successfully
-           headers:
-             Location:
-               description: URL of the uploaded file
-               schema:
-                 type: string
-                 format: uri
-           content:
-             application/json:
-                schema:
-                  $ref: "#/components/schemas/FileProperties"
+          description: File uploaded successfully
+          headers:
+            Location:
+              description: URL of the uploaded file
+              schema:
+                type: string
+                format: uri
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FileProperties"
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
@@ -75,9 +76,9 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  "/files/{file-id}":
+  "/files/{file-id}/content":
     get:
-      description: "Returns the file content."
+      description: "Returns the file content e.g: The binary data."
       operationId: "getFile"
       parameters:
         - $ref: "#/components/parameters/file-id"
@@ -97,86 +98,7 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-    patch:
-      description: "Replaces the file content while preserving metadata."
-      operationId: "updateFileContent"
-      parameters:
-        - $ref: "#/components/parameters/file-id"
-      requestBody:
-        required: true
-        $ref: "#/components/requestBodies/UpdateFileContentRequest"
-      responses:
-        "200":
-          description: "File content updated successfully"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FileProperties"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "415":
-          $ref: "#/components/responses/UnsupportedMediaType"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-    put:
-      description: "Update a file."
-      operationId: "updateFile"
-      parameters:
-        - $ref: "#/components/parameters/file-id"
-      requestBody:
-        required: true
-        $ref: "#/components/requestBodies/UploadFileRequest"
-      responses:
-        "201":
-           description: File uploaded successfully
-           headers:
-             Location:
-               description: URL of the uploaded file
-               schema:
-                 type: string
-                 format: uri
-           content:
-             application/json:
-                schema:
-                  $ref: "#/components/schemas/FileProperties"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "415":
-          $ref: "#/components/responses/UnsupportedMediaType"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-    delete:
-      description: "Deletes a file."
-      operationId: "deleteFile"
-      parameters:
-        - $ref: "#/components/parameters/file-id"
-      responses:
-        "200":
-          $ref: "#/components/responses/FileId"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  "/properties/{file-id}":
+  "/files/{file-id}":
     get:
       description: "Returns Properties of the file."
       operationId: "getFileProperties"
@@ -224,6 +146,85 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
+    post:
+      description: "Replaces the file content while preserving metadata."
+      operationId: "updateFileContent"
+      parameters:
+        - $ref: "#/components/parameters/file-id"
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/UpdateFileContentRequest"
+      responses:
+        "200":
+          description: "File content updated successfully"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FileProperties"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+    put:
+      description: "Update a file."
+      operationId: "updateFile"
+      parameters:
+        - $ref: "#/components/parameters/file-id"
+      requestBody:
+        required: true
+        $ref: "#/components/requestBodies/UploadFileRequest"
+      responses:
+        "201":
+          description: File uploaded successfully
+          headers:
+            Location:
+              description: URL of the uploaded file
+              schema:
+                type: string
+                format: uri
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FileProperties"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "415":
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
+    delete:
+      description: "Deletes a file."
+      operationId: "deleteFile"
+      parameters:
+        - $ref: "#/components/parameters/file-id"
+      responses:
+        "200":
+          $ref: "#/components/responses/FileId"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalServerError"
+
 components:
   parameters:
     file-id:
@@ -236,8 +237,8 @@ components:
 
     tags:
       description: >
-          Filter by tag. Prefix with "!" to exclude a tag.
-          Example: tag=cats&tag=!dogs
+        Filter by tag. Prefix with "!" to exclude a tag.
+        Example: tag=cats&tag=!dogs
       name: tag
       in: query
       schema:
@@ -245,8 +246,8 @@ components:
 
     names:
       description: >
-          Filter by name. Prefix with "!" to exclude a name.
-          Example: name=cats&name=!dogs
+        Filter by name. Prefix with "!" to exclude a name.
+        Example: name=cats&name=!dogs
       name: name
       in: query
       schema:
@@ -256,8 +257,8 @@ components:
 
     owners:
       description: >
-          Filter by ownerId. Prefix with "!" to exclude a ownerId.
-          Example: tag=1234&tag=!2344
+        Filter by ownerId. Prefix with "!" to exclude a ownerId.
+        Example: tag=1234&tag=!2344
       name: owner
       in: query
       schema:
@@ -270,7 +271,7 @@ components:
       name: access_user
       in: query
       schema:
-          $ref: "#/components/schemas/OwnerId"
+        $ref: "#/components/schemas/OwnerId"
 
     access:
       name: access
@@ -294,7 +295,7 @@ components:
       in: query
       schema:
         type: string
-        enum: ['createdAt', 'updatedAt']
+        enum: ["createdAt", "updatedAt"]
 
     start:
       description: "Start time for a time range filter."
@@ -338,7 +339,7 @@ components:
       in: query
       schema:
         type: string
-        enum: ['and', 'or']
+        enum: ["and", "or"]
 
     sort:
       description: "The datatype used for sorting."
@@ -346,7 +347,7 @@ components:
       in: query
       schema:
         type: string
-        enum: ['name', 'tags', 'locations', 'date']
+        enum: ["name", "tags", "locations", "date"]
 
     asc:
       description: "If the data should be sorted in ascending order."
@@ -424,19 +425,19 @@ components:
             description: "Update the Metadata of a file."
             type: object
             properties:
-                access:
-                  $ref: "#/components/schemas/AccessRights"
-                metadata:
-                  type: object
-                  properties:
-                    name:
-                      $ref: "#/components/schemas/Filename"
-                    owner-id:
-                      $ref: "#/components/schemas/OwnerId"
-                tags:
-                   $ref: "#/components/schemas/Tags"
-                locations:
-                   $ref: "#/components/schemas/FileLocation"
+              access:
+                $ref: "#/components/schemas/AccessRights"
+              metadata:
+                type: object
+                properties:
+                  name:
+                    $ref: "#/components/schemas/Filename"
+                  owner-id:
+                    $ref: "#/components/schemas/OwnerId"
+              tags:
+                $ref: "#/components/schemas/Tags"
+              locations:
+                $ref: "#/components/schemas/FileLocation"
 
   responses:
     ### File Property
@@ -531,10 +532,10 @@ components:
       type: object
       properties:
         file-id:
-         $ref: "#/components/schemas/FileId"
+          $ref: "#/components/schemas/FileId"
 
         access:
-         $ref: "#/components/schemas/AccessRights"
+          $ref: "#/components/schemas/AccessRights"
 
         metadata:
           $ref: "#/components/schemas/Metadata"
@@ -564,8 +565,8 @@ components:
     Metadata:
       description: "Represents additional Metadata for a file"
       allOf:
-      - $ref: "#/components/schemas/TimeMetadata"
-      - type: object
+        - $ref: "#/components/schemas/TimeMetadata"
+        - type: object
       required:
         - type
         - name
@@ -650,9 +651,10 @@ components:
 
     FileId:
       description: "Used to identify a file."
-      type: integer
+      type:
+        integer
 
-       ### Error Schemas
+        ### Error Schemas
 
     ErrorSchema:
       type: object
