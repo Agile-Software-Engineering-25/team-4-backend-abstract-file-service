@@ -14,6 +14,8 @@ spring:
 #     driverClassName: org.h2.Driver
 #     username: sa
 #     password: password
-# server:
+server:
+  servlet:
+    context-path: /microservice/abstract-file-service/v1
   error:
     include-message: always

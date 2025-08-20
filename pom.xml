@@ -97,6 +97,25 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.3.0</version>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/src/gen/java/main</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
                 <version>7.14.0</version>
@@ -106,6 +125,8 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
+                            <source>${java.version}</source>
+                            <target>${java.version}</target>
                             <inputSpec>${project.basedir}/src/main/resources/META-INF/fileService.openapi.yaml</inputSpec>
                             <output>${project.build.directory}/</output>
                             <modelPackage>${base.package}.model</modelPackage>
