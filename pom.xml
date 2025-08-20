@@ -66,7 +66,27 @@
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
         </dependency>
-           </dependencies>
+
+        <!-- OpenApiDependencies -->
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>2.2.36</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.1.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.openapitools/jackson-databind-nullable -->
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>0.2.6</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
             <plugin>
@@ -89,6 +109,7 @@
                                 <sourceFolder>src/gen/java/main</sourceFolder>
                                 <configPackage>${base.package}.configuration</configPackage>
                                 <useSpringBoot3>true</useSpringBoot3>
+                                <interfaceOnly>true</interfaceOnly>
                             </configOptions>
                         </configuration>
                     </execution>
