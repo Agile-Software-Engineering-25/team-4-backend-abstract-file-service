@@ -25,8 +25,8 @@ paths:
         - $ref: "#/components/parameters/end"
         - $ref: "#/components/parameters/tags"
         - $ref: "#/components/parameters/owners"
-        # - $ref: "#/components/parameters/access_user"
-        # - $ref: "#/components/parameters/access"
+        - $ref: "#/components/parameters/access_user"
+        - $ref: "#/components/parameters/access"
       responses:
         "200":
           description: "Gets all the file-ids, where the tag is included."
@@ -265,31 +265,28 @@ components:
         items:
           $ref: "#/components/schemas/Filename"
 
-    # access_user:
-    #   description: "A given user by id to check for access rights. Default is the user/service that has a request."
-    #   name: access_user
-    #   in: query
-    #   schema:
-    #       $ref: "#/components/schemas/OwnerId"
-    #
-    # access:
-    #   description: >
-    #       Filter by AccessType for the given access user. Prefix with "!" to exclude an AccessType.
-    #       Example: access=read&access=!write
-    #   name:
-    #   in: query
-    #   schema:
-    #     type: array
-    #     items:
-    #       access_type:
-    #         type: string
-    #         enum:
-    #           - read
-    #           - write
-    #           - delete
-    #           - "!read"
-    #           - "!write"
-    #           - "!delete"
+    access_user:
+      description: "A given user by id to check for access rights. Default is the user/service that has a request."
+      name: access_user
+      in: query
+      schema:
+          $ref: "#/components/schemas/OwnerId"
+
+    access:
+      name: access
+      in: query
+      schema:
+        type: array
+        items:
+          access_type:
+            type: string
+            enum:
+              - read
+              - write
+              - delete
+              - "!read"
+              - "!write"
+              - "!delete"
 
     time:
       description: "What timestamp to search in."
