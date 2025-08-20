@@ -24,9 +24,137 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SearchResults"
-        "400":
-          $ref: "#/components/responses/BadRequest"
+              $ref: "#/components/schemas/SearchResults"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "403":
+        $ref: "#/components/responses/Forbidden"
+      "415":
+        $ref: "#/components/responses/UnsupportedMediaType"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
+
+  post:
+    description: "Upload a new file."
+    operationId: "createFile"
+    requestBody:
+      required: true
+      $ref: "#/components/requestBodies/CreateFileRequest"
+    responses:
+      "201":
+        description: "File created successfully"
+        headers:
+          Location:
+            description: "URL of the created file"
+            schema:
+              type: string
+              format: uri
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FileProperties"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "403":
+        $ref: "#/components/responses/Forbidden"
+      "409":
+        $ref: "#/components/responses/Conflict"
+      "415":
+        $ref: "#/components/responses/UnsupportedMediaType"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
+
+"/v1/files/{file-id}":
+  get:
+    description: "Gets file metadata and basic information."
+    operationId: "getFileById"
+    parameters:
+      - $ref: "#/components/parameters/fileId"
+    responses:
+      "200":
+        description: "File metadata retrieved successfully"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FileProperties"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "403":
+        $ref: "#/components/responses/Forbidden"
+      "404":
+        $ref: "#/components/responses/NotFound"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
+
+  put:
+    description: "Replaces the entire file (content and metadata)."
+    operationId: "replaceFile"
+    parameters:
+      - $ref: "#/components/parameters/fileId"
+    requestBody:
+      required: true
+      $ref: "#/components/requestBodies/CreateFileRequest"
+    responses:
+      "200":
+        description: "File replaced successfully"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FileProperties"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "403":
+        $ref: "#/components/responses/Forbidden"
+      "404":
+        $ref: "#/components/responses/NotFound"
+      "415":
+        $ref: "#/components/responses/UnsupportedMediaType"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
+
+  delete:
+    description: "Deletes a file."
+    operationId: "deleteFile"
+    parameters:
+      - $ref: "#/components/parameters/fileId"
+    responses:
+      "204":
+        description: "File deleted successfully"
+      "400":
+        $ref: "#/components/responses/BadRequest"
+      "401":
+        $ref: "#/components/responses/Unauthorized"
+      "403":
+        $ref: "#/components/responses/Forbidden"
+      "404":
+        $ref: "#/components/responses/NotFound"
+      "500":
+        $ref: "#/components/responses/InternalServerError"
+
+"/v1/files:search":
+  post:
+    description: "Advanced search for files with complex criteria."
+    operationId: "searchFiles"
+    requestBody:
+      required: true
+      $ref: "#/components/requestBodies/SearchFilesRequest"
+    responses:
+      "200":
+        description: "Search completed successfully"
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SearchResults"
+      "400":
+        $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
         "403":
@@ -36,135 +164,7 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-    post:
-      description: "Upload a new file."
-      operationId: "createFile"
-      requestBody:
-        required: true
-        $ref: "#/components/requestBodies/CreateFileRequest"
-      responses:
-        "201":
-          description: "File created successfully"
-          headers:
-            Location:
-              description: "URL of the created file"
-              schema:
-                type: string
-                format: uri
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FileProperties"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "409":
-          $ref: "#/components/responses/Conflict"
-        "415":
-          $ref: "#/components/responses/UnsupportedMediaType"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  "/v1/files/{file-id}":
-    get:
-      description: "Gets file metadata and basic information."
-      operationId: "getFileById"
-      parameters:
-        - $ref: "#/components/parameters/fileId"
-      responses:
-        "200":
-          description: "File metadata retrieved successfully"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FileProperties"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-    put:
-      description: "Replaces the entire file (content and metadata)."
-      operationId: "replaceFile"
-      parameters:
-        - $ref: "#/components/parameters/fileId"
-      requestBody:
-        required: true
-        $ref: "#/components/requestBodies/CreateFileRequest"
-      responses:
-        "200":
-          description: "File replaced successfully"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/FileProperties"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "415":
-          $ref: "#/components/responses/UnsupportedMediaType"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-    delete:
-      description: "Deletes a file."
-      operationId: "deleteFile"
-      parameters:
-        - $ref: "#/components/parameters/fileId"
-      responses:
-        "204":
-          description: "File deleted successfully"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "404":
-          $ref: "#/components/responses/NotFound"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  "/v1/files:search":
-    post:
-      description: "Advanced search for files with complex criteria."
-      operationId: "searchFiles"
-      requestBody:
-        required: true
-        $ref: "#/components/requestBodies/SearchFilesRequest"
-      responses:
-        "200":
-          description: "Search completed successfully"
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SearchResults"
-        "400":
-          $ref: "#/components/responses/BadRequest"
-        "401":
-          $ref: "#/components/responses/Unauthorized"
-        "403":
-          $ref: "#/components/responses/Forbidden"
-        "415":
-          $ref: "#/components/responses/UnsupportedMediaType"
-        "500":
-          $ref: "#/components/responses/InternalServerError"
-
-  "/v1/files/{file-id}/properties":
+"/v1/files/{file-id}/properties":
     get:
       description: "Returns detailed properties of a specific file."
       operationId: "getFileProperties"
@@ -216,7 +216,7 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  "/v1/files/{file-id}/content":
+"/v1/files/{file-id}/content":
     get:
       description: "Downloads the file content."
       operationId: "downloadFileContent"
@@ -264,7 +264,7 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  "/v1/files/{file-id}/tags":
+"/v1/files/{file-id}/tags":
     get:
       description: "Gets all tags associated with a file."
       operationId: "getFileTags"
@@ -344,7 +344,7 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  "/v1/files/{file-id}/tags/{tag-name}":
+"/v1/files/{file-id}/tags/{tag-name}":
     delete:
       description: "Removes a specific tag from a file."
       operationId: "removeFileTag"
@@ -365,7 +365,7 @@ paths:
         "500":
           $ref: "#/components/responses/InternalServerError"
 
-  "/v1/files/{file-id}/access-permissions":
+"/v1/files/{file-id}/access-permissions":
     get:
       description: "Gets access permissions for a file."
       operationId: "getFileAccessPermissions"
@@ -581,8 +581,6 @@ components:
               permissions:
                 $ref: "#/components/schemas/AccessRights"
 
-
-
   responses:
     ### Success Responses
 
@@ -605,6 +603,36 @@ components:
         application/json:
           schema:
             $ref: "#/components/schemas/DirectoryProperties"
+
+    TagsResponse:
+      description: "Response containing file tags"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              file-id:
+                $ref: "#/components/schemas/FileId"
+              tags:
+                $ref: "#/components/schemas/Tags"
+              updated-at:
+                type: string
+                format: date-time
+
+    AccessPermissionsResponse:
+      description: "Response containing access permissions"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              file-id:
+                $ref: "#/components/schemas/FileId"
+              permissions:
+                $ref: "#/components/schemas/AccessRights"
+              updated-at:
+                type: string
+                format: date-time
 
     ### Error Responses
 
@@ -791,37 +819,6 @@ components:
     FileId:
       description: "Used to identify a file."
       type: integer
-
-    TagsResponse:
-      description: "Response containing file tags"
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              file-id:
-                $ref: "#/components/schemas/FileId"
-              tags:
-                $ref: "#/components/schemas/Tags"
-              updated-at:
-                type: string
-                format: date-time
-
-    AccessPermissionsResponse:
-      description: "Response containing access permissions"
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              file-id:
-                $ref: "#/components/schemas/FileId"
-              permissions:
-                $ref: "#/components/schemas/AccessRights"
-              updated-at:
-                type: string
-                format: date-time
-
 
     ### Search Schemas
 
