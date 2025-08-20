@@ -33,7 +33,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ArrayOfFileIds"
+                $ref: "#/components/schemas/ArrayOfFileProperties"
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
@@ -561,15 +561,6 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/FileProperties"
-
-    ArrayOfFileIds:
-      description: "An array of file ids."
-      type: object
-      properties:
-        files:
-          type: array
-          items:
-            $ref: "#/components/schemas/FileId"
 
     ### File Properties
     Metadata:
