@@ -26,8 +26,8 @@ paths:
         - $ref: "#/components/parameters/end"
         - $ref: "#/components/parameters/tags"
         - $ref: "#/components/parameters/owners"
-        - $ref: "#/components/parameters/access_user"
         - $ref: "#/components/parameters/access"
+
       responses:
         "200":
           description: "Gets all the file-ids, where the tag is included."
@@ -266,17 +266,11 @@ components:
         items:
           $ref: "#/components/schemas/Filename"
 
-    access_user:
-      description: "A given user by id to check for access rights. Default is the user/service that has a request."
-      name: access_user
-      in: query
-      schema:
-        $ref: "#/components/schemas/OwnerId"
-
     access:
       name: access
       in: query
       schema:
+        description: "Filter by the access rights of the current user/service."
         type: array
         items:
           access_type:
