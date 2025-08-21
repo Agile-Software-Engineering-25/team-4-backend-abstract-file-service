@@ -578,6 +578,9 @@ components:
           $ref: "#/components/schemas/Filename"
         owner-id:
           $ref: "#/components/schemas/OwnerId"
+        size:
+          type: number
+          description: "The size of the file in Bytes."
 
     Filename:
       type: string
