@@ -34,7 +34,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ArrayOfFileProperties"
+                $ref: "#/components/schemas/SearchResult"
         "400":
           $ref: "#/components/responses/BadRequest"
         "401":
@@ -554,6 +554,18 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/FileProperties"
+
+    SearchResult:
+      allOf:
+        - $ref: "#/components/schemas/ArrayOfFileProperties"
+        - type: object
+          properties:
+            more:
+              $ref: "#/components/schemas/MorePages"
+
+    MorePages:
+      description: "True if there are more pages."
+      type: boolean
 
     ### File Properties
     Metadata:
