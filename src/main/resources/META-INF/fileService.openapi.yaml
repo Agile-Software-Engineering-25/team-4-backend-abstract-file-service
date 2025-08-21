@@ -589,23 +589,8 @@ components:
         $ref: "#/components/schemas/FileId"
 
     SupportedMediaType:
-      description: "MIME type of the file"
+      description: "MIME type of the file. For Reference: https://www.iana.org/assignments/media-types/media-types.xhtml"
       type: string
-      enum:
-        - text/html
-        - image/jpeg
-        - image/png
-        - image/gif
-        - application/msword
-        - application/vnd.openxmlformats-officedocument.wordprocessingml.document
-        - application/vnd.ms-excel
-        - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
-        - application/vnd.ms-powerpoint
-        - application/vnd.openxmlformats-officedocument.presentationml.presentation
-        - application/zip
-        - application/pdf
-        - text/calendar
-        - application/json
 
     TimeMetadata:
       type: object
