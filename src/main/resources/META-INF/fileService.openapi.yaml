@@ -244,6 +244,19 @@ components:
       schema:
         $ref: "#/components/schemas/Tags"
 
+    fuzziness:
+      name: fuzziness
+      in: query
+      description: >
+        Degree of fuzziness for the search of filenames.
+        0 = exact match, 1 = low, 2 = medium, high = 3+
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+        maximum: 5
+        default: 1
+
     names:
       description: >
         Filter by name. Prefix with "!" to exclude a name.
@@ -350,19 +363,6 @@ components:
       schema:
         type: boolean
         default: true
-
-    fuzziness:
-      name: fuzziness
-      in: query
-      description: >
-        Degree of fuzziness for the search.
-        0 = exact match, 1 = low, 2 = medium, high = 3+
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-        maximum: 5
-        default: 1
 
   requestBodies:
     UploadFileRequest:
