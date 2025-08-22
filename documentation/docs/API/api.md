@@ -21,7 +21,7 @@ To use negation, add `!` as the first character.
   - `end`: End of the time range
 - `sort`: The datatype to sort on
 - `asc`: Boolean for ascending / descending order
-- `fuzziness`: How strict the input must match (1–5)
+- `fuzziness`: How strict the input must match for searching file names.(0–5)
 
 **Pagination Parameters:**
 
@@ -33,7 +33,7 @@ Upload a file.
 
 ---
 
-### `/file/{file-id}`
+### `/files/{file-id}`
 
 #### GET
 Get the properties of a file by ID.
@@ -53,7 +53,7 @@ Delete the file.
 
 ---
 
-### `/file/{file-id}/content`
+### `/files/{file-id}/content`
 
 #### GET
 Retrieve the binary content of the file.
