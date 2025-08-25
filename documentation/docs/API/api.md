@@ -30,6 +30,7 @@ To use negation, add `!` as the first character.
 
 #### POST
 Upload a file.
+To create a directory, omit the `file` parameter.
 
 ---
 

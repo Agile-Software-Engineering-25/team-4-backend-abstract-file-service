@@ -366,21 +366,21 @@ components:
 
   requestBodies:
     UploadFileRequest:
-      description: "Upload a file with metadata"
+      description: "Upload a file with metadata / Create a directory."
       required: true
       content:
         multipart/form-data:
           schema:
             type: object
             required:
-              - file
               - name
               - mime-type
             properties:
               file:
                 type: string
+                nullable: true
                 format: binary
-                description: The file to upload
+                description: The file to upload. Leave empty to create directory.
               name:
                 $ref: "#/components/schemas/Filename"
               mime-type:
