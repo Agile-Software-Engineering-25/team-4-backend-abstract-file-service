@@ -25,6 +25,7 @@ paths:
         - $ref: "#/components/parameters/start"
         - $ref: "#/components/parameters/end"
         - $ref: "#/components/parameters/tags"
+        - $ref: "#/components/parameters/locations"
         - $ref: "#/components/parameters/owners"
         - $ref: "#/components/parameters/access"
 
@@ -267,6 +268,16 @@ components:
         type: array
         items:
           $ref: "#/components/schemas/Filename"
+
+    locations:
+      description: >
+        Filter by location.
+      name: location
+      in: query
+      schema:
+        type: array
+        items:
+          $ref: "#/components/schemas/FileLocation"
 
     owners:
       description: >

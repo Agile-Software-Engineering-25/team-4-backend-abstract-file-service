@@ -15,6 +15,7 @@ To use negation, add `!` as the first character.
 - `name`
 - `owner`
 - `access`
+- `location`: Folder to search in.
 - `option`: For the above parameters, the filters can be combined with `and` / `or`
 - `time`: What timestamp to use (`createdAt` / `updatedAt`)
   - `start`: Beginning of the time range
@@ -94,4 +95,4 @@ Coming changes to the API:
 ---
 
 ### Definition:
-The API is defined in ``team-4-backend-abstract-file-service/src/main/resources/META-INF/fileService.openapi.yaml``
+The API is defined in [team-4-backend-abstract-file-service/src/main/resources/META-INF/fileService.openapi.yaml](https://github.com/Agile-Software-Engineering-25/team-4-backend-abstract-file-service/blob/main/src/main/resources/META-INF/fileService.openapi.yaml)
