@@ -1,19 +1,21 @@
 spring:
   application:
-    name: ASE-UserService
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    show-sql: false
-    hibernate:
-      ddl-auto: update
-    properties:
-      hibernate:
-        format_sql: true
-  datasource:
-    url: jdbc:h2:file:./data/mydb
-    driverClassName: org.h2.Driver
-    username: sa
-    password: password
+    name: ASE-FileService
+#   jpa:
+#     database-platform: org.hibernate.dialect.H2Dialect
+#     show-sql: false
+#     hibernate:
+#       ddl-auto: update
+#     properties:
+#       hibernate:
+#         format_sql: true
+#   datasource:
+#     url: jdbc:h2:file:./data/mydb
+#     driverClassName: org.h2.Driver
+#     username: sa
+#     password: password
 server:
+  servlet:
+    context-path: /microservice/abstract-file-service/v1
   error:
     include-message: always
