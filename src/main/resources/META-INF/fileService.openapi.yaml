@@ -466,24 +466,67 @@ components:
     FileContent:
       description: "Returns the file."
       content:
-        text/html: {} # HTML
-        image/jpeg: {} # JPG Image
-        image/png: {} # PNG Image
-        image/gif: {} # GIF Image
-        application/msword: {} # Word (.doc)
+        text/html:
+          schema:
+            type: string
+            format: binary
+        image/jpeg: # JPG Image
+          schema:
+            type: string
+            format: binary
+        image/png: # PNG Image
+          schema:
+            type: string
+            format: binary
+        image/gif: # GIF Image
+          schema:
+            type: string
+            format: binary
+        application/msword: # Word (.doc)
+          schema:
+            type: string
+            format: binary
         application/vnd.openxmlformats-officedocument.wordprocessingml.document:
-          {} # Word (.docx)
-        application/vnd.ms-excel: {} # Excel (.xls)
-        application/vnd.openxmlformats-officedocument.spreadsheetml.sheet: {} # Excel (.xlsx)
-        application/vnd.ms-powerpoint: {} # PowerPoint (.ppt)
+          schema:
+            type: string
+            format: binary
+            # Word (.docx)
+        application/vnd.ms-excel: # Excel (.xls)
+          schema:
+            type: string
+            format: binary
+        application/vnd.openxmlformats-officedocument.spreadsheetml.sheet: # Excel (.xlsx)
+          schema:
+            type: string
+            format: binary
+        application/vnd.ms-powerpoint: # PowerPoint (.ppt)
+          schema:
+            type: string
+            format: binary
         application/vnd.openxmlformats-officedocument.presentationml.presentation:
-          {} # PowerPoint (.pptx)
-        application/zip: {} # ZIP Archive
-        application/pdf: {} # PDF File
-        text/calendar: {} # ics File
+          # PowerPoint (.pptx)
+          schema:
+            type: string
+            format: binary
+        application/zip: # ZIP Archive
+          schema:
+            type: string
+            format: binary
+        application/pdf: # PDF File
+          schema:
+            type: string
+            format: binary
+        text/calendar: # ics File
+          schema:
+            type: string
+            format: binary
         application/json:
           schema:
             $ref: "#/components/schemas/DirectoryProperties"
+        application/octet-stream: # Just Binary Data
+          schema:
+            type: string
+            format: binary
 
     ### Error Responses
 
