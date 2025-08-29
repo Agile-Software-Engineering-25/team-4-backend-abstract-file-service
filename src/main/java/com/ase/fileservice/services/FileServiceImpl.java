@@ -1,13 +1,14 @@
 package com.ase.fileservice.services;
 
 import org.springframework.stereotype.Service;
-import com.ase.fileservice.services.interfaces.FileService;
+import com.ase.fileservice.interfaces.FileContent;
+import com.ase.fileservice.interfaces.FileService;
 
 @Service
 class FileServiceImpl implements FileService {
-  @Override
-  public void deleteFile(Integer fileId) {
-    FileService.super.deleteFile(fileId);
+
+  public FileContent<?> getFile(Integer fileId) {
+    throw new UnsupportedOperationException("Not supported yet.");
   }
 
 }

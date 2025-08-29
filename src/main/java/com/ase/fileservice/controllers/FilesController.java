@@ -3,16 +3,19 @@ package com.ase.fileservice.controllers;
 import java.time.OffsetDateTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.ase.fileservice.api.FilesApi;
+import com.ase.fileservice.interfaces.FileService;
 import com.ase.fileservice.model.AccessRights;
 import com.ase.fileservice.model.FileProperties;
+import com.ase.fileservice.model.Metadata;
 import com.ase.fileservice.model.SearchResult;
 import com.ase.fileservice.model.UpdateFilePropertiesRequest;
-import com.ase.fileservice.services.interfaces.FileService;
+import com.ase.fileservice.model.UpdateFilePropertiesRequestMetadata;
 
 @RestController
 public class FilesController implements FilesApi {
@@ -31,13 +34,16 @@ public class FilesController implements FilesApi {
   }
 
   @Override
-  public ResponseEntity<Void> getFile(Integer fileId) {
-    return FilesApi.super.getFile(fileId);
+  public ResponseEntity<Resource> getFile(Integer fileId) {
+    var content = fileService.getFile(fileId);
+    var resource = content.toResource();
+    return new ResponseEntity<Resource>(resource, HttpStatus.OK);
   }
 
   @Override
   public ResponseEntity<FileProperties> getFileProperties(Integer fileId) {
-    return FilesApi.super.getFileProperties(fileId);
+    var properties = fileService.getFileProperties(fileId);
+    return new ResponseEntity<>(properties, HttpStatus.OK);
   }
 
   @Override
@@ -52,10 +58,10 @@ public class FilesController implements FilesApi {
       OffsetDateTime start,
       OffsetDateTime end,
       List<String> tag,
-      List<List<Integer>> location,
+      List<Integer> location,
       List<String> owner,
       List<Object> access) {
-    return FilesApi.super.searchFiles(
+    var searchResult = fileService.searchFiles(
         page,
         limit,
         option,
@@ -69,6 +75,7 @@ public class FilesController implements FilesApi {
         location,
         owner,
         access);
+    return new ResponseEntity<SearchResult>(searchResult, HttpStatus.OK);
   }
 
   @Override
@@ -81,15 +88,19 @@ public class FilesController implements FilesApi {
       List<String> tags,
       AccessRights access,
       List<Integer> locations) {
-    return FilesApi.super.updateFile(
-        fileId,
-        name,
-        mimeType,
-        file,
-        ownerId,
-        tags,
-        access,
-        locations);
+
+    var metadata = new UpdateFilePropertiesRequestMetadata();
+    metadata.setName(name);
+    metadata.setOwnerId(ownerId);
+
+    var fileProperties = new UpdateFilePropertiesRequest();
+    fileProperties.setMetadata(metadata);
+    fileProperties.setAccess(access);
+    fileProperties.setLocations(locations);
+    fileProperties.setTags(tags);
+
+    var modifiedProperties = fileService.updateFile(fileId, fileProperties, mimeType, file);
+    return new ResponseEntity<FileProperties>(modifiedProperties, HttpStatus.OK);
   }
 
   @Override
@@ -97,19 +108,16 @@ public class FilesController implements FilesApi {
       Integer fileId,
       MultipartFile file,
       String mimeType) {
-    return FilesApi.super.updateFileContent(
-        fileId,
-        file,
-        mimeType);
+    var fileProperties = fileService.updateFileContent(fileId, file, mimeType);
+    return new ResponseEntity<FileProperties>(fileProperties, HttpStatus.OK);
   }
 
   @Override
   public ResponseEntity<Void> updateFileProperties(
       Integer fileId,
       UpdateFilePropertiesRequest updateFilePropertiesRequest) {
-    return FilesApi.super.updateFileProperties(
-        fileId,
-        updateFilePropertiesRequest);
+    fileService.updateFileProperties(fileId, updateFilePropertiesRequest);
+    return new ResponseEntity<Void>(HttpStatus.OK);
   }
 
   @Override
@@ -121,13 +129,18 @@ public class FilesController implements FilesApi {
       List<String> tags,
       AccessRights access,
       List<Integer> locations) {
-    return FilesApi.super.uploadFile(
-        name,
-        mimeType,
-        file,
-        ownerId,
-        tags,
-        access,
-        locations);
+
+    var metadata = new UpdateFilePropertiesRequestMetadata();
+    metadata.setName(name);
+    metadata.setOwnerId(ownerId);
+
+    var fileProperties = new UpdateFilePropertiesRequest();
+    fileProperties.setMetadata(metadata);
+    fileProperties.setAccess(access);
+    fileProperties.setLocations(locations);
+    fileProperties.setTags(tags);
+
+    var created = fileService.uploadFile(fileProperties, mimeType ,file)
+    return new ResponseEntity<FileProperties>(created, HttpStatus.OK);
   }
 }
