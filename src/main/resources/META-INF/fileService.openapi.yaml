@@ -275,9 +275,7 @@ components:
       name: location
       in: query
       schema:
-        type: array
-        items:
-          $ref: "#/components/schemas/FileLocation"
+        $ref: "#/components/schemas/FileLocation"
 
     owners:
       description: >
