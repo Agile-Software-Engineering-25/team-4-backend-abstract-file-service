@@ -1,7 +1,7 @@
 package com.ase.fileservice.services;
 
-import com.ase.fileservice.services.interfaces.FileService;
 import org.springframework.stereotype.Service;
+import com.ase.fileservice.services.interfaces.FileService;
 
 @Service
 class FileServiceImpl implements FileService {
