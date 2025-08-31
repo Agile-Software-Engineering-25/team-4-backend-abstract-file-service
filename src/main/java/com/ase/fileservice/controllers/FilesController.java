@@ -12,7 +12,6 @@ import com.ase.fileservice.api.FilesApi;
 import com.ase.fileservice.interfaces.FileService;
 import com.ase.fileservice.model.AccessRights;
 import com.ase.fileservice.model.FileProperties;
-import com.ase.fileservice.model.Metadata;
 import com.ase.fileservice.model.SearchResult;
 import com.ase.fileservice.model.UpdateFilePropertiesRequest;
 import com.ase.fileservice.model.UpdateFilePropertiesRequestMetadata;
@@ -99,8 +98,14 @@ public class FilesController implements FilesApi {
     fileProperties.setLocations(locations);
     fileProperties.setTags(tags);
 
-    var modifiedProperties = fileService.updateFile(fileId, fileProperties, mimeType, file);
-    return new ResponseEntity<FileProperties>(modifiedProperties, HttpStatus.OK);
+    var modifiedProperties = fileService.updateFile(
+        fileId,
+        fileProperties,
+        mimeType,
+        file);
+    return new ResponseEntity<FileProperties>(
+        modifiedProperties,
+        HttpStatus.OK);
   }
 
   @Override
@@ -140,7 +145,7 @@ public class FilesController implements FilesApi {
     fileProperties.setLocations(locations);
     fileProperties.setTags(tags);
 
-    var created = fileService.uploadFile(fileProperties, mimeType ,file)
+    var created = fileService.uploadFile(fileProperties, mimeType, file);
     return new ResponseEntity<FileProperties>(created, HttpStatus.OK);
   }
 }
