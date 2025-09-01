@@ -96,3 +96,7 @@ Coming changes to the API:
 
 ### Definition:
 The API is defined in [team-4-backend-abstract-file-service/src/main/resources/META-INF/fileService.openapi.yaml](https://github.com/Agile-Software-Engineering-25/team-4-backend-abstract-file-service/blob/main/src/main/resources/META-INF/fileService.openapi.yaml)
+
+## Update Log
+
+- fixed return type of /files/{file-id}/content to return the Resource
