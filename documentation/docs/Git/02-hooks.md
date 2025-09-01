@@ -2,7 +2,7 @@
 
 For development include these hooks in your git repository.
 
-`.git/hooks/pre-commit`:
+`.git/hooks/pre-push`:
 
 ```bash
 #!/bin/bash
