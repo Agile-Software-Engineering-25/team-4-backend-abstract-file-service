@@ -16,6 +16,8 @@ import com.ase.fileservice.model.SearchResult;
 import com.ase.fileservice.model.UpdateFilePropertiesRequest;
 import com.ase.fileservice.model.UpdateFilePropertiesRequestMetadata;
 
+// TODO: Global Exception Handling
+
 @RestController
 public class FilesController implements FilesApi {
 
@@ -27,7 +29,6 @@ public class FilesController implements FilesApi {
 
   @Override
   public ResponseEntity<Integer> deleteFile(Integer fileId) {
-    // TODO: Global Exception Handling
     fileService.deleteFile(fileId);
     return new ResponseEntity<>(HttpStatus.OK);
   }
@@ -36,7 +37,7 @@ public class FilesController implements FilesApi {
   public ResponseEntity<Resource> getFile(Integer fileId) {
     var content = fileService.getFile(fileId);
     var resource = content.toResource();
-    return new ResponseEntity<Resource>(resource, HttpStatus.OK);
+    return new ResponseEntity<>(resource, HttpStatus.OK);
   }
 
   @Override
@@ -74,7 +75,7 @@ public class FilesController implements FilesApi {
         location,
         owner,
         access);
-    return new ResponseEntity<SearchResult>(searchResult, HttpStatus.OK);
+    return new ResponseEntity<>(searchResult, HttpStatus.OK);
   }
 
   @Override
@@ -103,7 +104,7 @@ public class FilesController implements FilesApi {
         fileProperties,
         mimeType,
         file);
-    return new ResponseEntity<FileProperties>(
+    return new ResponseEntity<>(
         modifiedProperties,
         HttpStatus.OK);
   }
@@ -114,7 +115,7 @@ public class FilesController implements FilesApi {
       MultipartFile file,
       String mimeType) {
     var fileProperties = fileService.updateFileContent(fileId, file, mimeType);
-    return new ResponseEntity<FileProperties>(fileProperties, HttpStatus.OK);
+    return new ResponseEntity<>(fileProperties, HttpStatus.OK);
   }
 
   @Override
@@ -122,7 +123,7 @@ public class FilesController implements FilesApi {
       Integer fileId,
       UpdateFilePropertiesRequest updateFilePropertiesRequest) {
     fileService.updateFileProperties(fileId, updateFilePropertiesRequest);
-    return new ResponseEntity<Void>(HttpStatus.OK);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 
   @Override
@@ -146,6 +147,6 @@ public class FilesController implements FilesApi {
     fileProperties.setTags(tags);
 
     var created = fileService.uploadFile(fileProperties, mimeType, file);
-    return new ResponseEntity<FileProperties>(created, HttpStatus.OK);
+    return new ResponseEntity<>(created, HttpStatus.OK);
   }
 }
