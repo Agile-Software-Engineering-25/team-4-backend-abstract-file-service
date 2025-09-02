@@ -2,7 +2,6 @@ package com.ase.fileservice.controllers;
 
 import java.time.OffsetDateTime;
 import java.util.List;
-import com.ase.fileservice.model.ErrorSchema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ase.fileservice.api.FilesApi;
 import com.ase.fileservice.interfaces.FileService;
 import com.ase.fileservice.model.AccessRights;
+import com.ase.fileservice.model.ErrorSchema;
 import com.ase.fileservice.model.FileProperties;
 import com.ase.fileservice.model.SearchResult;
 import com.ase.fileservice.model.UpdateFilePropertiesRequest;
@@ -24,7 +24,9 @@ import com.ase.fileservice.model.UpdateFilePropertiesRequestMetadata;
 @RestController
 public class FilesController implements FilesApi {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(FilesController.class);
+  private static final Logger LOGGER =
+      LoggerFactory.getLogger(FilesController.class);
+
   private final FileService fileService;
 
   public FilesController(@Autowired FileService fileService) {
@@ -166,7 +168,7 @@ public class FilesController implements FilesApi {
     ErrorSchema error = new ErrorSchema();
     error.setTitle("Exception");
     error.setDetail(ex.getMessage());
-    error.status(500);
+    error.status(HttpStatus.INTERNAL_SERVER_ERROR.value());
     return error;
   }
 }
