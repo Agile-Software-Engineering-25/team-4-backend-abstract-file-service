@@ -59,7 +59,7 @@ FileService is a Spring Boot-based application designed to manage user-related o
 git clone https://github.com/Agile-Software-Engineering-25/team-4-backend-abstract-file-service.git
 cd team-4-backend-abstract-file-service
 ```
-#### Build the Project in a development dependencies
+#### Build the Project with development dependencies
 ```bash
 mvn clean install -Pdev
 ```
