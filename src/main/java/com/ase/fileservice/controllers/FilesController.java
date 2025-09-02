@@ -2,10 +2,15 @@ package com.ase.fileservice.controllers;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import com.ase.fileservice.model.ErrorSchema;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.ase.fileservice.api.FilesApi;
@@ -16,11 +21,10 @@ import com.ase.fileservice.model.SearchResult;
 import com.ase.fileservice.model.UpdateFilePropertiesRequest;
 import com.ase.fileservice.model.UpdateFilePropertiesRequestMetadata;
 
-// TODO: Global Exception Handling
-
 @RestController
 public class FilesController implements FilesApi {
 
+  private static final Logger LOGGER = LoggerFactory.getLogger(FilesController.class);
   private final FileService fileService;
 
   public FilesController(@Autowired FileService fileService) {
@@ -148,5 +152,21 @@ public class FilesController implements FilesApi {
 
     var created = fileService.uploadFile(fileProperties, mimeType, file);
     return new ResponseEntity<>(created, HttpStatus.OK);
+  }
+
+  /**
+   * Method for handling the Rest of Exceptions that are thrown during Runtime.
+   */
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  @ExceptionHandler(Exception.class)
+  public ErrorSchema handleExceptions(Exception ex) {
+
+    LOGGER.error("Exception: {}", ex.getMessage(), ex);
+
+    ErrorSchema error = new ErrorSchema();
+    error.setTitle("Exception");
+    error.setDetail(ex.getMessage());
+    error.status(500);
+    return error;
   }
 }
