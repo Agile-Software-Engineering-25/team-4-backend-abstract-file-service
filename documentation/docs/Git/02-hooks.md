@@ -11,6 +11,9 @@ SCRIPT_PATH="$(readlink -f "${BASH_SOURCE[0]}")"
 REPO_ROOT="${SCRIPT_PATH%%.git/*}"
 cd "$REPO_ROOT"
 
+# Run mvn install
+mvn clean install
+
 # Run Checkstyle
 JAR=checkstyle-11.0.0-all.jar
 mkdir -p target
