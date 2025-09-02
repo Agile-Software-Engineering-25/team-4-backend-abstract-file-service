@@ -59,17 +59,18 @@ UserService is a Spring Boot-based application designed to manage user-related o
 
 ```bash
 git clone https://github.com/your-repo/userservice.git
-cd userservice
+cd fileservice
 ```
-#### Build the Project
+#### Build the Project in a development dependencies
 ```bash
-mvn clean install
+mvn clean install -Pdev
 ```
 #### Run the Application
 ```bash
-mvn spring-boot:run
+mvn -Pdev spring-boot:run
 ```
-The application will start on http://localhost:8080
+The application will start on http://localhost:8080/microservice/abstract-file-service/v1/
+Swagger Ui is available at http://localhost:8080/microservice/abstract-file-service/v1/swagger-ui/index.html
 
 ### Testing
 #### Unit Tests

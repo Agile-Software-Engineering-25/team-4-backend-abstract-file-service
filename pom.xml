@@ -86,16 +86,18 @@
             <artifactId>jackson-databind-nullable</artifactId>
             <version>0.2.6</version>
         </dependency>
-
-        <!-- Not needed if interfaceOnly = true -->
-        <!-- <dependency> -->
-        <!--     <groupId>io.swagger.core.v3</groupId> -->
-        <!--     <artifactId>swagger-models</artifactId> -->
-        <!--     <version>2.2.36</version> -->
-        <!-- </dependency> -->
     </dependencies>
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
@@ -125,8 +127,6 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <source>${java.version}</source>
-                            <target>${java.version}</target>
                             <inputSpec>${project.basedir}/src/main/resources/META-INF/fileService.openapi.yaml</inputSpec>
                             <output>${project.build.directory}/</output>
                             <modelPackage>${base.package}.model</modelPackage>
@@ -145,4 +145,16 @@
             </plugin>
         </plugins>
     </build>
+   <profiles>
+       <profile>
+           <id>dev</id>
+          <dependencies>
+              <dependency>
+                  <groupId>org.springdoc</groupId>
+                  <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                  <version>2.8.5</version>
+              </dependency>
+          </dependencies>
+       </profile>
+   </profiles>
 </project>
