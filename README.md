@@ -32,18 +32,16 @@ This command generates static content into the `build` directory and can be serv
 
 ### Deployment
 
-We are using a github action to automatically deploy this docusaurus to github pages.
+We are using a GitHub action to automatically deploy this docusaurus to GitHub pages.
 
 # Dev
 
-## UserService
+## FileService
 
-UserService is a Spring Boot-based application designed to manage user-related operations. It leverages modern Java (Java 21) and integrates with various Spring Boot modules for web, data, and testing functionalities.
+FileService is a Spring Boot-based application designed to manage user-related operations. It leverages modern Java (Java 21) and integrates with various Spring Boot modules for web, data, and testing functionalities.
 
 ### Features
 
-- RESTful API for user management
-- Integration with H2 in-memory database
 - Dependency injection and configuration using Spring Boot
 - Unit and integration testing with JUnit 5
 - Maven-based build and dependency management
@@ -58,18 +56,19 @@ UserService is a Spring Boot-based application designed to manage user-related o
 #### Clone the Repository
 
 ```bash
-git clone https://github.com/your-repo/userservice.git
-cd userservice
+git clone https://github.com/Agile-Software-Engineering-25/team-4-backend-abstract-file-service.git
+cd team-4-backend-abstract-file-service
 ```
-#### Build the Project
+#### Build the Project with development dependencies
 ```bash
-mvn clean install
+mvn clean install -Pdev
 ```
 #### Run the Application
 ```bash
-mvn spring-boot:run
+mvn -Pdev spring-boot:run
 ```
-The application will start on http://localhost:8080
+The application will start on http://localhost:8080/microservice/abstract-file-service/v1/
+Swagger Ui is available at http://localhost:8080/microservice/abstract-file-service/v1/swagger-ui/index.html
 
 ### Testing
 #### Unit Tests
