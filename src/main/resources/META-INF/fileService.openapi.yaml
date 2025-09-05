@@ -592,6 +592,9 @@ components:
         locations:
           $ref: "#/components/schemas/FileLocation"
 
+        content_url:
+          $ref: "#/components/schemas/ContentUrl"
+
     DirectoryProperties:
       description: "Represents the response if a file is a directory."
       allOf:
@@ -642,6 +645,11 @@ components:
 
     Filename:
       type: string
+      description: "The name of the file."
+
+    ContentUrl:
+      type: string
+      format: "uri"
       description: "The name of the file."
 
     FileLocation:
